@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import "./Home.css";
 import logo from "../../Assets/Images/lotus.png";
 import Login from '../Login';
-import Dashboard from '../Dashboard';
 import AddAccount from '../AddAccount';
+import { useHistory } from "react-router";
 const Home = () => {
     const [loginModal,setOpenLoginModal] = useState(false);
     const [signupModal,setSignUpModal] = useState(false);
     const [loggedin,setloggedin] = useState(false);
+    const history  = useHistory();
+
     return (
         <div>
         {!loggedin && <div className="home">
@@ -25,13 +27,12 @@ const Home = () => {
                     <input type="button" value="Sign up" className="login-button" onClick={()=>{setSignUpModal(true)}} />
                 </div>
             </div>
-            <div className="home-body-container" onClick={() =>setloggedin(true)}>
+            <div className="home-body-container" onClick={() =>history.push("/dashboard")}>
                 Home
             </div>
             {loginModal && <Login />}
             {signupModal && <AddAccount />}
         </div>}
-        {loggedin && <Dashboard />}
         </div>
     )
 }

@@ -1,5 +1,5 @@
-import { Switch, Route } from "react-router-dom";
-import React from "react";
+import { Switch, Route ,BrowserRouter } from "react-router-dom";
+import React,{ Suspense } from "react";
 import Home from "./Components/Home";
 import Login from "./Components/Login";
 import Dashboard from "./Components/Dashboard";
@@ -23,6 +23,7 @@ const routes = [
 
 const Routes = () => {
     return (
+        <BrowserRouter>
         <Switch>
             {routes.map(({path,component,protectedRoute,renderWithoutLogin}) => 
             protectedRoute? (
@@ -35,6 +36,7 @@ const Routes = () => {
             </Route>))
             }
         </Switch>
+        </BrowserRouter>
     )
 
 }
