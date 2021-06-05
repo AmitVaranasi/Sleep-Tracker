@@ -52,3 +52,20 @@
         border-radius: 0.5rem;
         margin-top: 1rem ;
 }
+
+.error{
+    color: red;
+}
+
+.suggest-signup-div{
+    text-align: end;
+}
+
+.sign-up-span{
+    color: rgb(102, 160, 236);
+    text-decoration: underline;
+}
+
+.sign-up-span:hover{
+    text-decoration: none;
+}
