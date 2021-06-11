@@ -53,6 +53,7 @@ const Login = () => {
         fire
             .auth()
             .createUserWithEmailAndPassword(email,password)
+            .then((response)=>{addNewUser(response.user.email)})
             .catch((err)=>{
                 switch(err.code) {
                     case "auth/email-already-in-use":
@@ -67,15 +68,26 @@ const Login = () => {
             })
     }
 
-    const _handleLogout = ()=>{
-        fire.auth().signOut();
-    }
+    const addNewUser = async (email)=>{
+        let formData = new FormData();
+        formData.append('name', email);
+        fetch("http://127.0.0.1:8000/api/v1/add-user/",{
+            method:"POST",
+            body:formData
+        })
+        .then(response=>response.json())
+        .then((res)=>{
+               console.log("added new user") 
+        });
+}
 
     const authListener = ()=>{
         fire.auth().onAuthStateChanged((user)=>{
             if(user){
                 _clearInputs()
                 _setUserName(user);
+                //alert(user)
+                history.push('/dashboard');
             }else{
                 _setUserName("");
             }

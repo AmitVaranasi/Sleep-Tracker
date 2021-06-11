@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from "../../Assets/Images/lotus.png"
 import { useHistory } from "react-router";
+import fire from '../../firebase';
 
 import NoData from '../../Assets/Images/nodatafound.png';
 
@@ -13,6 +14,7 @@ const Dashboard = () => {
     const [wakeupTime,_setWakeupTime] = useState("");
     const [duration,_setSleepDuration] = useState();
     const [pastData,_setPastData] = useState([]);
+    const [username,_setUserName] = useState("");
     const history = useHistory();
 
     const addNewData = ()=>{
@@ -25,14 +27,67 @@ const Dashboard = () => {
 
         const newEntry = {
             date:date,
-            sleep_Time:sleepTime,
-            wakeup_Time:wakeupTime,
-            sleep_duration:`${hours}:${minutes}`
+            sleepTime:sleepTime,
+            wakeupTime:wakeupTime,
+            duration:`${hours}:${minutes}`
         }
 
-        _setPastData([...pastData,newEntry]);
-        setOpenEntry(false);
+                let formData = new FormData();
+                formData.append('username', username);
+                formData.append('date',date);
+                formData.append('sleepTime',sleepTime)
+                formData.append('wakeupTime',wakeupTime);
+                formData.append('duration',`${hours}:${minutes}`);
+                fetch("http://127.0.0.1:8000/api/v1/add-sleep-data/",{
+                    method:"POST",
+                    body:formData
+                })
+                .then(response=>response.json())
+                .then((res)=>{
+                    console.log(res)
+                    getPastData()     
+                });
+                setOpenEntry(false);
 
+    }
+
+    const getPastData = async ()=>{
+                let formData = new FormData();
+                formData.append('username', username);
+                fetch("http://127.0.0.1:8000/api/v1/sleep-time-list/",{
+                    method:"POST",
+                    body:formData
+                })
+                .then(response=>response.json())
+                .then((res)=>{
+                    _setPastData(res);        
+                });
+    }
+
+    useEffect(()=>{
+        fire.auth().onAuthStateChanged((user)=>{
+            if(user){
+                let formData = new FormData();
+                formData.append('username', user.email);
+                fetch("http://127.0.0.1:8000/api/v1/sleep-time-list/",{
+                    method:"POST",
+                    body:formData
+                })
+                .then(response=>response.json())
+                .then((res)=>{
+                    _setPastData(res);        
+                });
+                _setUserName(user.email);
+            }else{
+                history.push("/");
+            }
+        })
+    },[])
+    
+
+    const _handleLogout = ()=>{
+        fire.auth().signOut();
+        history.push("/")
     }
 
     return (
@@ -44,7 +99,7 @@ const Dashboard = () => {
                 <div className="logo-header">
                     Sleep Tracker
                 </div>
-                <input type="button" value="Logout" onClick={()=>{history.push("/")}}/>
+                <input type="button" value="Logout" onClick={_handleLogout}/>
             </div>
             {openEntry &&
                 <div className="entry-container">
@@ -79,9 +134,9 @@ const Dashboard = () => {
                 {pastData.map((data)=>(
                     <>
                     <div key={data.date}>{data.date}</div>
-                    <div key={data.sleep_Time}>{data.sleep_Time}</div>
-                    <div key={data.wakeup_Time}>{data.wakeup_Time}</div>
-                    <div key={data.sleep_duration}>{data.sleep_duration}</div>
+                    <div key={data.sleepTime}>{data.sleepTime}</div>
+                    <div key={data.wakeupTime}>{data.wakeupTime}</div>
+                    <div key={data.duration}>{data.duration}</div>
                     </>
                 ))}
             </div>    
