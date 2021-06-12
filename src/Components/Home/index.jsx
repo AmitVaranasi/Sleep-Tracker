@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import "./Home.css";
-import logo from "../../Assets/Images/lotus.png";
+import logo from "../../Assets/Images/SleepTrackerImage.jpg";
 import Login from '../Login';
 import AddAccount from '../AddAccount';
 import { useHistory } from "react-router";
+import SweetSleep from '../../Assets/Images/Sweet-Sleep.jpg';
 const Home = () => {
     const [loginModal,setOpenLoginModal] = useState(false);
     const [signupModal,setSignUpModal] = useState(false);
@@ -23,12 +24,11 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="buttons-container">
-                    <input type="button" value="Log in" className="login-button" onClick={()=>{setOpenLoginModal(true)}} />
-                    <input type="button" value="Sign up" className="login-button" onClick={()=>{setSignUpModal(true)}} />
+                    <input type="button" value="Login/Signup" className="login-button" onClick={()=>{setOpenLoginModal(true)}} />
                 </div>
             </div>
             <div className="home-body-container" onClick={() =>history.push("/dashboard")}>
-                Home
+                <img src={SweetSleep} alt="sweet"  className="sleep-image"/>
             </div>
             {loginModal && <Login />}
             {signupModal && <AddAccount />}

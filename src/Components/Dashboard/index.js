@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from "../../Assets/Images/lotus.png"
+import SleepTrackerImage from "../../Assets/Images/SleepTrackerImage.jpg"
 import { useHistory } from "react-router";
 import fire from '../../firebase';
 
@@ -94,7 +94,7 @@ const Dashboard = () => {
         <div>
             <div className="logo-container">
                 <div>
-                    <img src={logo} alt="" className="home-logo" />
+                    <img src={SleepTrackerImage} alt="sleep tracker image" className="home-logo" />
                 </div>
                 <div className="logo-header">
                     Sleep Tracker
