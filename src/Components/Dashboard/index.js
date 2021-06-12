@@ -103,6 +103,8 @@ const Dashboard = () => {
                 <input type="button" value="Logout" className="logout-button" onClick={_handleLogout}/>
             </div>
             {openEntry &&
+                <div>
+                <div>Hi {username}</div>
                 <div className="entry-container">
                     <div className="flex">
                         <div>Date:</div>
@@ -118,9 +120,11 @@ const Dashboard = () => {
                     </div>
                     <input type="submit" onClick={addNewData}/>
                 </div>
+                </div>
             }
             {openEntry===false&&(
                 <div>
+                    <div>Hi {username}</div>
                     <input type="button" value="new entry" className="new-entry-button" onClick={()=> setOpenEntry(true)}/>
                 </div>
             )}

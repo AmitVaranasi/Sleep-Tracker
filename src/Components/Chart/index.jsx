@@ -6,6 +6,7 @@ import './chart.css'
 
 const BarChart = (data) => {
     console.log(data);
+    
   const state = {
     series: [
       {
