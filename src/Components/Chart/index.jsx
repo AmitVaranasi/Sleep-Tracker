@@ -1,24 +1,20 @@
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import './chart.css'
 
 
-const BarChart = (
-) => {
+const BarChart = (data) => {
+    console.log(data);
   const state = {
     series: [
       {
-        name: "yes-1",
+        name: "sleep-duration",
         data: [20,18,16,14,16,18],
-      },
-    //   {
-    //     name: "yes-2",
-    //     data: [40,36,32,28,32,36],
-    //   },
+      }
     ],
     options: {
       colors: ["#EF6B64" 
-            // "#664890"
         ],
       plotOptions: {
         bar: {
@@ -39,8 +35,8 @@ const BarChart = (
         categories: ['Mon','tue','wed','thu','fri','sat'],
       },
       yaxis: {
-        min: 0,
-        max: 100,
+        // min: 0,
+        // max: 100,
         tickAmount: 8,
         forceNiceScale: true,
       },
@@ -52,12 +48,13 @@ const BarChart = (
 
 
   return (
-    <div>
+    <div className="chart-container">
+        <div className="chart-header">Sleep Duration Chart</div>
         <ReactApexChart
           options={state.options}
           series={state.series}
           type="bar"
-          width="60%"
+          width="50%"
           height={400}
         />
     </div>

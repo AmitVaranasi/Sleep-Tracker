@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router";
 import "./Login.css"
 import fire from '../../firebase';
+
+import EmailImage from '../../Assets/Images/email-image.png'
+import passwordImage from '../../Assets/Images/passwordImage.png'
 const Login = () => {
     const [loginS,setLoginS] = useState(false);
     const [username,_setUserName] = useState("");
@@ -99,17 +102,24 @@ const Login = () => {
     },[])
 
     return (
-        <div className="overlay">
-            <div className="component">
+        <div>
+            <div className="overlay" onClick={()=>{window.location.reload()}}></div>
+        <div className="component">
                 <div className="body-component">
                     <div className="header">
                     {isLogin===false?"Login":"Signup"}
                     </div>
                     <div className="mobile-header">Email Id</div>
-                    <input type="text" className="mobile-number-box" value={email} onChange={(e)=>{_setEmail(e.target.value)}}/>
+                    <div className="email-input-div">
+                        <img src={EmailImage} alt="email-image"  className="email-image"/>
+                        <input type="text" className="mobile-number-box" value={email} onChange={(e)=>{_setEmail(e.target.value)}}/>
+                    </div>
                     {emailError.length>0&&<div className="error">{emailError}</div>}
                     <div className="mobile-header">Password:</div>
-                    <input type="password" className="mobile-number-box" value={password} onChange={(e)=>{_setPassword(e.target.value)}}/>
+                    <div className="email-input-div">
+                        <img src={passwordImage} alt="email-image"  className="email-image"/>
+                        <input type="password" className="mobile-number-box" value={password} onChange={(e)=>{_setPassword(e.target.value)}}/>
+                    </div>
                     {passwordError.length>0&&<div className="error">{passwordError}</div>}
                     <br/>
                     <input type="button" value="Log In" className="login-button-div" onClick={isLogin===false?_handleLogin:_handleSignup}/>
@@ -120,8 +130,8 @@ const Login = () => {
                     sign up here</span></div>}
                 </div>
             </div>
-            
         </div>
+        
     )
 }
 

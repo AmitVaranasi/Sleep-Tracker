@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    background-color: green;
+    background-color: #638eae;
     height: 4rem;
 }
 
@@ -41,4 +41,16 @@
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     row-gap: 1rem;
+}
+
+.logout-button{
+    margin-left: 10rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #142455;
+    width: 7rem;
+    margin-right: 2rem;
+    background: #142455;
+    color: #Dbe8f1;
 }
