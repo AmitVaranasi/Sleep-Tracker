@@ -6,6 +6,7 @@ import fire from '../../firebase';
 import NoData from '../../Assets/Images/nodatafound.png';
 
 import "./Dashboard.css";
+import BarChart from '../Chart';
 
 const Dashboard = () => {
     const [openEntry,setOpenEntry] = useState(false);
@@ -15,6 +16,8 @@ const Dashboard = () => {
     const [duration,_setSleepDuration] = useState();
     const [pastData,_setPastData] = useState([]);
     const [username,_setUserName] = useState("");
+    const [dateArray,_setDateArray] = useState([]);
+    const [durationArray,_setDurationArray]  = useState([])
     const history = useHistory();
 
     const addNewData = ()=>{
@@ -44,7 +47,6 @@ const Dashboard = () => {
                 })
                 .then(response=>response.json())
                 .then((res)=>{
-                    console.log(res)
                     getPastData()     
                 });
                 setOpenEntry(false);
@@ -60,7 +62,17 @@ const Dashboard = () => {
                 })
                 .then(response=>response.json())
                 .then((res)=>{
-                    _setPastData(res);        
+                    let dateArray = []
+                    let durationArray = []
+                    res.sleepTimeList.map((dataObject)=>{
+                      dateArray.push(dataObject.date);
+                      let time = dataObject.duration.split(":");
+                      durationArray.push(Number(time[0]))
+                
+                    })
+                    _setDateArray(dateArray)
+                    _setDurationArray(durationArray)
+                    _setPastData(res.sleepTimeList);        
                 });
     }
 
@@ -75,7 +87,17 @@ const Dashboard = () => {
                 })
                 .then(response=>response.json())
                 .then((res)=>{
-                    _setPastData(res);        
+                    let dateArray = []
+                    let durationArray = []
+                    res.sleepTimeList.map((dataObject)=>{
+                      dateArray.push(dataObject.date);
+                      let time = dataObject.duration.split(":");
+                      durationArray.push(Number(time[0]))
+                
+                    })
+                    _setDateArray(dateArray)
+                    _setDurationArray(durationArray)
+                    _setPastData(res.sleepTimeList);        
                 });
                 _setUserName(user.email);
             }else{
@@ -99,7 +121,7 @@ const Dashboard = () => {
                 <div className="logo-header">
                     Sleep Tracker
                 </div>
-                <input type="button" value="Logout" onClick={_handleLogout}/>
+                <input type="button" value="Logout" className="logout-button" onClick={_handleLogout}/>
             </div>
             {openEntry &&
                 <div className="entry-container">
@@ -126,6 +148,7 @@ const Dashboard = () => {
             {pastData.length===0?(
                 <img src={NoData} alt="no data found image"></img>
             ):(
+            <div>
             <div className="data-container">
                     <div >Date</div>
                     <div >Sleep Time</div>
@@ -139,6 +162,8 @@ const Dashboard = () => {
                     <div key={data.duration}>{data.duration}</div>
                     </>
                 ))}
+            </div>
+                <BarChart dateArray={dateArray} durationArray={durationArray}/>
             </div>    
             )}
             

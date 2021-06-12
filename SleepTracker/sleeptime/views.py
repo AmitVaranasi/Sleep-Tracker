@@ -20,7 +20,10 @@ class SleepTimeList(APIView):
         email = request.POST.get('username')
         SleepTimelist = SleepTime.objects.filter(name=User.objects.get(name=email))
         serializer = SleepTimeSerializer(SleepTimelist,many=True)
-        return Response(serializer.data)
+        print("type of response data",type(serializer.data))
+        dictData = dict()
+        dictData['sleepTimeList'] = serializer.data
+        return Response(dictData)
 
 class AddSleepData(APIView):
     def post(self,request):
