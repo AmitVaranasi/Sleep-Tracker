@@ -6,6 +6,7 @@ import fire from '../../firebase';
 import NoData from '../../Assets/Images/nodatafound.png';
 
 import "./Dashboard.css";
+import BarChart from '../Chart';
 
 const Dashboard = () => {
     const [openEntry,setOpenEntry] = useState(false);
@@ -126,6 +127,7 @@ const Dashboard = () => {
             {pastData.length===0?(
                 <img src={NoData} alt="no data found image"></img>
             ):(
+            <div>
             <div className="data-container">
                     <div >Date</div>
                     <div >Sleep Time</div>
@@ -139,6 +141,23 @@ const Dashboard = () => {
                     <div key={data.duration}>{data.duration}</div>
                     </>
                 ))}
+            </div>
+                {/* <BarChart duration={[9,8,7,5,4,3,2]} dates={['11-1-1','12-1-1','13-1-1','14-1-1','15-1-1','16-1-1','17-1-1']} /> */}
+                {/* <BarChart  systolicName="SYSTOLIC"
+                            diastolicName="DIASTOLIC"
+                            diastolicData={[10, 32, 40, 80, 90, 62, 70]}
+                            systolicData={[6, 38, 48, 62, 70, 32, 90]}
+                            values={[
+                                    ["1", "Sun"],
+                                    ["2", "Mon"],
+                                    ["3", "Tue"],
+                                    ["4", "Wed"],
+                                    ["5", "Thu"],
+                                    ["6", "Fri"],
+                                    ["7", "Sat"],
+                            ]} 
+                /> */}
+                <BarChart />
             </div>    
             )}
             
