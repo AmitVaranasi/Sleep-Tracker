@@ -4,14 +4,13 @@ import ReactApexChart from "react-apexcharts";
 import './chart.css'
 
 
-const BarChart = (data) => {
-    console.log(data);
-    
+const BarChart = ({dateArray,durationArray}) => {
+
   const state = {
     series: [
       {
         name: "sleep-duration",
-        data: [20,18,16,14,16,18],
+        data:durationArray,
       }
     ],
     options: {
@@ -20,8 +19,8 @@ const BarChart = (data) => {
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: "20%",
-          borderRadius: 5,
+          columnWidth: "15%",
+          borderRadius: 8,
         },
       },
       dataLabels: {
@@ -33,7 +32,7 @@ const BarChart = (data) => {
         colors: ["transparent"],
       },
       xaxis: {
-        categories: ['Mon','tue','wed','thu','fri','sat'],
+        categories: dateArray,
       },
       yaxis: {
         // min: 0,

@@ -16,6 +16,8 @@ const Dashboard = () => {
     const [duration,_setSleepDuration] = useState();
     const [pastData,_setPastData] = useState([]);
     const [username,_setUserName] = useState("");
+    const [dateArray,_setDateArray] = useState([]);
+    const [durationArray,_setDurationArray]  = useState([])
     const history = useHistory();
 
     const addNewData = ()=>{
@@ -45,7 +47,6 @@ const Dashboard = () => {
                 })
                 .then(response=>response.json())
                 .then((res)=>{
-                    console.log(res)
                     getPastData()     
                 });
                 setOpenEntry(false);
@@ -61,7 +62,17 @@ const Dashboard = () => {
                 })
                 .then(response=>response.json())
                 .then((res)=>{
-                    _setPastData(res);        
+                    let dateArray = []
+                    let durationArray = []
+                    res.sleepTimeList.map((dataObject)=>{
+                      dateArray.push(dataObject.date);
+                      let time = dataObject.duration.split(":");
+                      durationArray.push(Number(time[0]))
+                
+                    })
+                    _setDateArray(dateArray)
+                    _setDurationArray(durationArray)
+                    _setPastData(res.sleepTimeList);        
                 });
     }
 
@@ -76,7 +87,17 @@ const Dashboard = () => {
                 })
                 .then(response=>response.json())
                 .then((res)=>{
-                    _setPastData(res);        
+                    let dateArray = []
+                    let durationArray = []
+                    res.sleepTimeList.map((dataObject)=>{
+                      dateArray.push(dataObject.date);
+                      let time = dataObject.duration.split(":");
+                      durationArray.push(Number(time[0]))
+                
+                    })
+                    _setDateArray(dateArray)
+                    _setDurationArray(durationArray)
+                    _setPastData(res.sleepTimeList);        
                 });
                 _setUserName(user.email);
             }else{
@@ -146,22 +167,7 @@ const Dashboard = () => {
                     </>
                 ))}
             </div>
-                {/* <BarChart duration={[9,8,7,5,4,3,2]} dates={['11-1-1','12-1-1','13-1-1','14-1-1','15-1-1','16-1-1','17-1-1']} /> */}
-                {/* <BarChart  systolicName="SYSTOLIC"
-                            diastolicName="DIASTOLIC"
-                            diastolicData={[10, 32, 40, 80, 90, 62, 70]}
-                            systolicData={[6, 38, 48, 62, 70, 32, 90]}
-                            values={[
-                                    ["1", "Sun"],
-                                    ["2", "Mon"],
-                                    ["3", "Tue"],
-                                    ["4", "Wed"],
-                                    ["5", "Thu"],
-                                    ["6", "Fri"],
-                                    ["7", "Sat"],
-                            ]} 
-                /> */}
-                <BarChart data={pastData} />
+                <BarChart dateArray={dateArray} durationArray={durationArray}/>
             </div>    
             )}
             
